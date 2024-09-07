@@ -18,9 +18,7 @@ const CalendarContent = ({
   const day = date.day();
   const color = getDayColor(day);
   const isCurrentMonth = dayjs(date).isSame(selectedDate, "month");
-  const onPress = () => {
-    setSelectedDate(date);
-  };
+  const onPress = () => setSelectedDate(date);
   const isSelected = dayjs(date).isSame(selectedDate, "date");
 
   return (

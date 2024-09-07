@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { FlatList, StyleSheet } from "react-native";
-import dayjs, { Dayjs } from "dayjs";
 import { getCalendarColumns } from "@/lib/utils";
 import CalendarHeader from "./CalendarHeader";
 import CalendarContent from "./CalendarContent";
+import useCalender from "@/hooks/useCalender";
+import { Dayjs } from "dayjs";
 
 const Calendar = () => {
-  const now = dayjs();
-
-  const [selectedDate, setSelectedDate] = useState(now);
+  const {
+    selectedDate,
+    setSelectedDate,
+    isDatePickerVisible,
+    showDatePicker,
+    hideDatePicker,
+    handleConfirm,
+  } = useCalender();
   const columns = getCalendarColumns(selectedDate);
-  const currentDate = selectedDate.format("YYYY.MM.DD");
 
   const renderItem = ({ item: date }: { item: Dayjs }) => {
     return (
@@ -28,7 +33,16 @@ const Calendar = () => {
       keyExtractor={(item) => item.format("YYYY-MM-DD")}
       renderItem={renderItem}
       numColumns={7}
-      ListHeaderComponent={<CalendarHeader currentDate={currentDate} />}
+      ListHeaderComponent={
+        <CalendarHeader
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          isDatePickerVisible={isDatePickerVisible}
+          showDatePicker={showDatePicker}
+          hideDatePicker={hideDatePicker}
+          handleConfirm={handleConfirm}
+        />
+      }
     />
   );
 };
