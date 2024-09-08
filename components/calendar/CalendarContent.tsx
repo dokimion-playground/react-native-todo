@@ -4,16 +4,34 @@ import { getDayColor } from "@/lib/utils";
 import Column from "../Columns";
 
 interface CalendarContentProps {
-  now: Dayjs;
+  date: Dayjs;
+  selectedDate: Dayjs;
+  setSelectedDate: (date: Dayjs) => void;
 }
 
-const CalendarContent = ({ now }: CalendarContentProps) => {
-  const dateText = now.date();
-  const day = now.day();
+const CalendarContent = ({
+  date,
+  selectedDate,
+  setSelectedDate,
+}: CalendarContentProps) => {
+  const dateText = date.date();
+  const day = date.day();
   const color = getDayColor(day);
-  const opacity = now.isSame(dayjs(), "month") ? 1 : 0.3;
+  const opacity = date.isSame(dayjs(), "month") ? 1 : 0.3;
+  const onPress = () => {
+    setSelectedDate(date);
+  };
+  const isSelected = dayjs(date).isSame(selectedDate, "date");
 
-  return <Column color={color} opacity={opacity} text={dateText} />;
+  return (
+    <Column
+      color={color}
+      opacity={opacity}
+      text={dateText}
+      onPress={onPress}
+      isSelected={isSelected}
+    />
+  );
 };
 
 export default CalendarContent;

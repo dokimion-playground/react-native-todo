@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { getCalendarColumns } from "@/lib/utils";
 import CalendarHeader from "./CalendarHeader";
 import CalendarContent from "./CalendarContent";
 
 const Calendar = () => {
   const now = dayjs();
-  const columns = getCalendarColumns(now);
-  const currentDate = now.format("YYYY.MM.DD");
 
-  const renderItem = ({ item }: { item: dayjs.Dayjs }) => {
-    return <CalendarContent now={item} />;
+  const [selectedDate, setSelectedDate] = useState(now);
+  const columns = getCalendarColumns(selectedDate);
+  const currentDate = selectedDate.format("YYYY.MM.DD");
+
+  const renderItem = ({ item: date }: { item: Dayjs }) => {
+    return (
+      <CalendarContent
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        date={date}
+      />
+    );
   };
+
+  console.log(selectedDate);
 
   return (
     <FlatList
