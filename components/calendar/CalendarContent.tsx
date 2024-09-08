@@ -17,7 +17,7 @@ const CalendarContent = ({
   const dateText = date.date();
   const day = date.day();
   const color = getDayColor(day);
-  const opacity = date.isSame(dayjs(), "month") ? 1 : 0.3;
+  const isCurrentMonth = dayjs(date).isSame(selectedDate, "month");
   const onPress = () => {
     setSelectedDate(date);
   };
@@ -26,7 +26,7 @@ const CalendarContent = ({
   return (
     <Column
       color={color}
-      opacity={opacity}
+      opacity={isCurrentMonth ? 1 : 0.4}
       text={dateText}
       onPress={onPress}
       isSelected={isSelected}

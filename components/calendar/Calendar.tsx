@@ -22,8 +22,6 @@ const Calendar = () => {
     );
   };
 
-  console.log(selectedDate);
-
   return (
     <FlatList
       data={columns}
